@@ -24,12 +24,6 @@ type Stop = {
   image: string;
 };
 
-type Voice = {
-  quote: string;
-  name: string;
-  country: string;
-};
-
 const menuItems: MenuItem[] = [
   {
     id: "classic",
@@ -106,26 +100,6 @@ const stopsToday: Stop[] = [
   },
 ];
 
-const voices: Voice[] = [
-  {
-    quote:
-      "I came for the shape, stayed for the crunch. It is the most fun street snack I had in Tokyo.",
-    name: "Maya L.",
-    country: "Singapore",
-  },
-  {
-    quote:
-      "My kids called it treasure fries. We followed the truck to two spots in one day.",
-    name: "Daniel R.",
-    country: "Australia",
-  },
-  {
-    quote:
-      "Fast service, great photos, and unique flavor combos. Perfect between sightseeing stops.",
-    name: "Sofia K.",
-    country: "Spain",
-  },
-];
 
 const galleryImages = [
   "https://images.unsplash.com/photo-1518013431117-eb1465fa5752?auto=format&fit=crop&w=900&q=80",
@@ -164,6 +138,7 @@ export default function Home() {
   const [hoveredMenu, setHoveredMenu] = useState<string | null>(null);
   const [activeStop, setActiveStop] = useState(0);
   const [openFaq, setOpenFaq] = useState(0);
+  const [bookingOpen, setBookingOpen] = useState(false);
 
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -230,16 +205,8 @@ export default function Home() {
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 1.1, delay: 0.2 }}
           >
-            <p className="hero-badge">Tokyo Street Launch</p>
             <h1>NINJA POTATO</h1>
-            <p className="hero-lead">Shuriken fries you want to hunt down.</p>
-            <p className="hero-sub">
-              Built for travelers who collect memories, not just meals.
-            </p>
-            <div className="hero-cta">
-              <a href="#find-us">Find Truck Now</a>
-              <a href="#menu">See Menu</a>
-            </div>
+            <p className="hero-lead">Find it. Crunch it. Repeat.</p>
           </motion.div>
 
           <a className="scroll-dot" href="#about" aria-label="Scroll to next section" />
@@ -266,10 +233,10 @@ export default function Home() {
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.8 }}
           >
-            NINJA POTATO は、訪日中に街を歩く人のための
-            「日本に潜入する時の携帯食」をコンセプトにしたブランドです。
-            忍者の手裏剣をモチーフにしたポテトを、観光地のキッチンカーで提供し、
-            “見つけたくなる体験”そのものを食体験として設計しています。
+            NINJA POTATO is designed as a portable stealth snack for exploring
+            Japan. Inspired by ninja shuriken, our fries are served from a kitchen
+            truck in high-traffic sightseeing areas, turning street food into a
+            discovery experience worth chasing.
           </motion.p>
         </section>
 
@@ -402,45 +369,6 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="section love">
-          <motion.div
-            className="section-head"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.8 }}
-          >
-            <p className="section-kicker">Why people love it</p>
-            <div>
-              <h2>CRUNCH</h2>
-              <h2>PROOF</h2>
-            </div>
-          </motion.div>
-          <div className="love-grid">
-            {voices.map((voice, index) => (
-              <motion.article
-                key={voice.name}
-                className="love-card"
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.7, delay: index * 0.06 }}
-              >
-                <p>{voice.quote}</p>
-                <div>
-                  <p>{voice.name}</p>
-                  <p>{voice.country}</p>
-                </div>
-              </motion.article>
-            ))}
-            <article className="love-card love-score">
-              <p>4.9 / 5 street snack rating</p>
-              <h3>12k+</h3>
-              <p>Shuriken boxes served to travelers in launch month.</p>
-            </article>
-          </div>
-        </section>
-
         <section className="section gallery">
           <motion.div
             className="section-head"
@@ -513,26 +441,43 @@ export default function Home() {
         </section>
 
         <section className="section final-cta" id="booking">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
+          <motion.button
+            className={`final-cta-toggle ${bookingOpen ? "is-open" : ""}`}
+            onClick={() => setBookingOpen((prev) => !prev)}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.8 }}
+            viewport={{ once: true, amount: 0.7 }}
+            transition={{ duration: 0.6 }}
           >
-            <p>出店先募集中 / For Business Owners in Japan</p>
-            <h2>日本人経営者向け 出店先募集中！</h2>
-            <p>
-              商業施設、観光地イベント、ホテル前スペース、地域フェスなど、
-              訪日客の多いロケーションでの出店提携先を募集しています。
-              キッチンカー運営・英語接客・SNS拡散導線まで一括で対応可能です。
-            </p>
-            <div>
-              <a href="mailto:booking@ninjapotato.jp">提携相談: booking@ninjapotato.jp</a>
-              <a href="https://wa.me/810000000000" target="_blank" rel="noreferrer">
-                LINE / WhatsAppで相談
-              </a>
-            </div>
-          </motion.div>
+            <p>出店のご依頼受付中</p>
+            <span>{bookingOpen ? "−" : "+"}</span>
+          </motion.button>
+          <AnimatePresence initial={false}>
+            {bookingOpen && (
+              <motion.div
+                className="final-cta-panel"
+                initial={{ opacity: 0, height: 0, y: 18 }}
+                animate={{ opacity: 1, height: "auto", y: 0 }}
+                exit={{ opacity: 0, height: 0, y: -10 }}
+                transition={{ duration: 0.45, ease: [0.12, 0.23, 0.5, 1] }}
+              >
+                <h2>出店のご依頼を受付中です</h2>
+                <p>
+                  商業施設、観光地イベント、ホテル前スペース、地域フェスなど、
+                  訪日客の多いロケーションでの出店依頼を受け付けています。
+                </p>
+                <div>
+                  <a href="https://line.me/R/ti/p/@ninjapotato" target="_blank" rel="noreferrer">
+                    LINE@
+                  </a>
+                  <a href="https://instagram.com/ninjapotato.jp" target="_blank" rel="noreferrer">
+                    Instagram
+                  </a>
+                  <a href="mailto:booking@ninjapotato.jp">メール</a>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </section>
       </main>
 
