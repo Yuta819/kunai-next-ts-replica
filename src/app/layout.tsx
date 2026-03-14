@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Kunai Replica",
-  description: "Next.js faithful replica of kunai.framer.website",
+  title: "NINJA POTATO | Findable Shuriken Fries in Tokyo",
+  description:
+    "NINJA POTATO is a shuriken-shaped fries brand for inbound visitors in Japan. Find our kitchen truck in top sightseeing areas.",
 };
 
 export default function RootLayout({
