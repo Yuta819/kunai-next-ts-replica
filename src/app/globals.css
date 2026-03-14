@@ -300,33 +300,6 @@ img {
   color: rgba(247, 243, 234, 0.84);
 }
 
-.about-pillars {
-  margin-top: 30px;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(220px, 1fr));
-  gap: 16px;
-}
-
-.about-pillars article {
-  background: rgba(247, 243, 234, 0.04);
-  border: 1px solid var(--soft-line);
-  padding: 22px;
-}
-
-.about-pillars h3 {
-  font-family: "Manrope", sans-serif;
-  font-size: 36px;
-  line-height: 1;
-  color: var(--potato-gold);
-  margin-bottom: 8px;
-}
-
-.about-pillars p {
-  font-size: 18px;
-  line-height: 1.45;
-  color: rgba(247, 243, 234, 0.84);
-}
-
 .menu-list {
   display: grid;
   gap: 16px;
@@ -335,10 +308,9 @@ img {
 .menu-card {
   display: grid;
   grid-template-columns: minmax(360px, 1fr) minmax(300px, 37%);
-  min-height: 440px;
+  min-height: 460px;
   overflow: hidden;
   background: linear-gradient(130deg, rgba(22, 34, 53, 0.95), rgba(17, 17, 17, 0.94));
-  border: 1px solid rgba(245, 184, 46, 0.28);
 }
 
 .menu-copy {
@@ -405,8 +377,10 @@ img {
 
 .menu-media {
   position: relative;
-  min-height: 440px;
+  height: 100%;
+  min-height: 460px;
   overflow: hidden;
+  background: rgba(247, 243, 234, 0.08);
 }
 
 .menu-media::after {
@@ -428,74 +402,120 @@ img {
   gap: 16px;
 }
 
-.find-list {
+.route-list {
   display: flex;
   flex-direction: column;
+  gap: 0;
+}
+
+.route-item {
+  display: flex;
+  align-items: flex-start;
   gap: 14px;
+  border: 0;
+  border-top: 1px solid rgba(247, 243, 234, 0.24);
+  background: transparent;
+  color: var(--off-white);
+  text-align: left;
+  padding: 16px;
+  cursor: pointer;
+  transition: background 0.35s var(--ninja-ease), color 0.35s var(--ninja-ease);
 }
 
-.stop-card {
-  border: 1px solid var(--soft-line);
-  background: rgba(247, 243, 234, 0.04);
-  padding: 18px;
-}
-
-.stop-card p:first-child {
+.route-item > p {
+  min-width: 32px;
+  font-size: 32px;
+  line-height: 1;
   color: var(--potato-gold);
-  font-size: 16px;
-  font-weight: 700;
-  margin-bottom: 8px;
+  font-weight: 500;
 }
 
-.stop-card h3 {
-  font-size: 34px;
-  line-height: 1.02;
-  margin-bottom: 8px;
+.route-item div p:first-child {
+  font-size: 28px;
+  line-height: 1.08;
+  color: var(--potato-gold);
+  margin-bottom: 4px;
 }
 
-.stop-card p:nth-child(3) {
-  color: rgba(247, 243, 234, 0.8);
+.route-item div p:nth-child(2) {
+  font-size: 24px;
+  line-height: 1.15;
+  margin-bottom: 4px;
+}
+
+.route-item div p:nth-child(3) {
   font-size: 18px;
+  line-height: 1.2;
+  color: rgba(247, 243, 234, 0.88);
+  margin-bottom: 4px;
+}
+
+.route-item div p:last-child {
+  font-size: 16px;
   line-height: 1.35;
+  color: rgba(247, 243, 234, 0.72);
+}
+
+.route-item.is-active {
+  background: var(--ketchup-red);
+}
+
+.route-item.is-active > p,
+.route-item.is-active div p:first-child {
+  color: var(--off-white);
+}
+
+.route-visual {
+  position: relative;
+  min-height: 520px;
+  overflow: hidden;
+  background: var(--deep-navy);
+}
+
+.route-visual img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.route-caption {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+  z-index: 2;
+  background: linear-gradient(180deg, rgba(17, 17, 17, 0.12), rgba(17, 17, 17, 0.74));
+  border: 1px solid rgba(247, 243, 234, 0.22);
+  padding: 16px;
+}
+
+.route-caption p:first-child {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--wasabi-mint);
+  margin-bottom: 6px;
+}
+
+.route-caption h3 {
+  font-size: 34px;
+  line-height: 1;
+  margin-bottom: 8px;
+  color: var(--off-white);
+}
+
+.route-caption p:nth-child(3) {
+  font-size: 18px;
+  line-height: 1.2;
+  color: var(--potato-gold);
   margin-bottom: 10px;
 }
 
-.stop-card a {
-  color: var(--wasabi-mint);
-  font-size: 16px;
-  border-bottom: 1px solid rgba(158, 211, 106, 0.6);
-}
-
-.map-card {
-  padding: 28px;
-  background:
-    radial-gradient(circle at 80% 20%, rgba(232, 71, 60, 0.28), transparent 46%),
-    linear-gradient(130deg, rgba(22, 34, 53, 0.95), rgba(17, 17, 17, 0.95));
-  border: 1px solid rgba(245, 184, 46, 0.28);
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 12px;
-}
-
-.map-card p:first-child {
-  color: var(--wasabi-mint);
-  font-size: 16px;
-  font-weight: 700;
-}
-
-.map-card h3 {
-  font-family: "Bungee", sans-serif;
-  font-size: clamp(34px, 4vw, 56px);
-  line-height: 0.94;
-  color: var(--potato-gold);
-}
-
-.map-card p:last-child {
-  color: rgba(247, 243, 234, 0.85);
-  font-size: 19px;
-  line-height: 1.45;
+.route-caption a {
+  font-size: 15px;
+  color: var(--off-white);
+  border-bottom: 1px solid rgba(247, 243, 234, 0.5);
 }
 
 .love-grid {
@@ -799,10 +819,10 @@ img {
   }
 
   .menu-media {
-    min-height: 330px;
+    min-height: 300px;
+    aspect-ratio: 4 / 3;
   }
 
-  .about-pillars,
   .love-grid,
   .gallery-grid,
   .faq-grid {
@@ -883,6 +903,10 @@ img {
     font-size: 18px;
   }
 
+  .menu-media {
+    min-height: 260px;
+  }
+
   .menu-fx {
     right: 16px;
     bottom: 18px;
@@ -891,8 +915,20 @@ img {
     font-size: 26px;
   }
 
-  .stop-card h3 {
-    font-size: 30px;
+  .route-item div p:first-child {
+    font-size: 24px;
+  }
+
+  .route-item div p:nth-child(2) {
+    font-size: 20px;
+  }
+
+  .route-item div p:nth-child(3) {
+    font-size: 16px;
+  }
+
+  .route-caption h3 {
+    font-size: 28px;
   }
 
   .love-card > p {

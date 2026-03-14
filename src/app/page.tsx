@@ -15,10 +15,13 @@ type MenuItem = {
 };
 
 type Stop = {
+  numeral: string;
+  jp: string;
   area: string;
   time: string;
   note: string;
   map: string;
+  image: string;
 };
 
 type Voice = {
@@ -72,22 +75,34 @@ const menuItems: MenuItem[] = [
 
 const stopsToday: Stop[] = [
   {
-    area: "Asakusa - Sensoji Gate",
+    numeral: "一",
+    jp: "浅草",
+    area: "浅草寺 雷門エリア",
     time: "11:30 - 14:00",
-    note: "Best timing before lunch crowds peak.",
+    note: "昼前の観光客が集中する時間帯が狙い目です。",
     map: "https://maps.google.com/?q=Asakusa+Sensoji",
+    image:
+      "https://images.unsplash.com/photo-1542931287-023b922fa89b?auto=format&fit=crop&w=1400&q=80",
   },
   {
-    area: "Shibuya - Scramble Crossing",
+    numeral: "二",
+    jp: "渋谷",
+    area: "スクランブル交差点 周辺",
     time: "15:30 - 18:30",
-    note: "Main photo spot. Expect short queue at sunset.",
+    note: "夕方は撮影人気が高く、短い待機列が発生します。",
     map: "https://maps.google.com/?q=Shibuya+Scramble+Crossing",
+    image:
+      "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1400&q=80",
   },
   {
-    area: "Tokyo Skytree - Solamachi Side",
+    numeral: "三",
+    jp: "押上",
+    area: "東京スカイツリー ソラマチ側",
     time: "19:30 - 22:00",
-    note: "Night view + snack mission complete.",
+    note: "夜景と一緒に“見つけた体験”を完成させる夜ミッション。",
     map: "https://maps.google.com/?q=Tokyo+Skytree",
+    image:
+      "https://images.unsplash.com/photo-1536098561742-ca998e48cbcc?auto=format&fit=crop&w=1400&q=80",
   },
 ];
 
@@ -147,6 +162,7 @@ const faqItems = [
 export default function Home() {
   const heroRef = useRef<HTMLElement | null>(null);
   const [hoveredMenu, setHoveredMenu] = useState<string | null>(null);
+  const [activeStop, setActiveStop] = useState(0);
   const [openFaq, setOpenFaq] = useState(0);
 
   const { scrollYProgress } = useScroll({
@@ -239,8 +255,8 @@ export default function Home() {
           >
             <p className="section-kicker">What is NINJA POTATO?</p>
             <div>
-              <h2>FINDABLE</h2>
-              <h2>EXPERIENCE</h2>
+              <h2>STEALTH</h2>
+              <h2>SNACK</h2>
             </div>
           </motion.div>
           <motion.p
@@ -250,29 +266,11 @@ export default function Home() {
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.8 }}
           >
-            NINJA POTATO is a mobile food brand designed around one idea: selling
-            the thrill of discovery. We appear in high-traffic sightseeing areas,
-            serve shuriken-shaped fries, and turn snack time into a mini mission for
-            visitors.
+            NINJA POTATO は、訪日中に街を歩く人のための
+            「日本に潜入する時の携帯食」をコンセプトにしたブランドです。
+            忍者の手裏剣をモチーフにしたポテトを、観光地のキッチンカーで提供し、
+            “見つけたくなる体験”そのものを食体験として設計しています。
           </motion.p>
-          <div className="about-pillars">
-            {[
-              ["Hunt", "Track our live location and catch the truck."],
-              ["Snap", "Capture iconic photos with ninja-inspired fries."],
-              ["Crunch", "Enjoy bold flavors while exploring Japan."],
-            ].map(([title, desc], index) => (
-              <motion.article
-                key={title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.6 }}
-                transition={{ duration: 0.6, delay: index * 0.08 }}
-              >
-                <h3>{title}</h3>
-                <p>{desc}</p>
-              </motion.article>
-            ))}
-          </div>
         </section>
 
         <section className="section menu" id="menu">
@@ -296,10 +294,14 @@ export default function Home() {
                 <motion.article
                   key={item.id}
                   className="menu-card"
-                  initial={{ opacity: 0, y: 80 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, y: 120, filter: "blur(12px)", scale: 0.96 }}
+                  whileInView={{ opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }}
                   viewport={{ once: true, amount: 0.25 }}
-                  transition={{ duration: 0.8, delay: index * 0.08 }}
+                  transition={{
+                    duration: 0.95,
+                    delay: index * 0.12,
+                    ease: [0.12, 0.23, 0.5, 1],
+                  }}
                   onMouseEnter={() => setHoveredMenu(item.id)}
                   onMouseLeave={() => setHoveredMenu(null)}
                 >
@@ -354,39 +356,49 @@ export default function Home() {
             </div>
           </motion.div>
           <div className="find-grid">
-            <div className="find-list">
-              {stopsToday.map((stop, index) => (
-                <motion.article
-                  key={stop.area}
-                  className="stop-card"
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, amount: 0.6 }}
-                  transition={{ duration: 0.6, delay: index * 0.06 }}
-                >
-                  <p>{stop.time}</p>
-                  <h3>{stop.area}</h3>
-                  <p>{stop.note}</p>
-                  <a href={stop.map} target="_blank" rel="noreferrer">
-                    Open in Maps
-                  </a>
-                </motion.article>
-              ))}
+            <div className="route-list">
+              {stopsToday.map((stop, index) => {
+                const active = activeStop === index;
+                return (
+                  <motion.button
+                    key={stop.area}
+                    className={`route-item ${active ? "is-active" : ""}`}
+                    onClick={() => setActiveStop(index)}
+                    whileHover={{ y: -2 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <p>{stop.numeral}</p>
+                    <div>
+                      <p>{stop.jp}</p>
+                      <p>{stop.area}</p>
+                      <p>{stop.time}</p>
+                      <p>{stop.note}</p>
+                    </div>
+                  </motion.button>
+                );
+              })}
             </div>
-            <motion.div
-              className="map-card"
-              initial={{ opacity: 0, scale: 0.97 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, amount: 0.4 }}
-              transition={{ duration: 0.7 }}
-            >
-              <p>Today&apos;s mission area</p>
-              <h3>Asakusa → Shibuya → Skytree</h3>
-              <p>
-                Save this page and check before heading out. Route updates may happen
-                due to weather and event traffic.
-              </p>
-            </motion.div>
+            <div className="route-visual">
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={stopsToday[activeStop].image}
+                  src={stopsToday[activeStop].image}
+                  alt={stopsToday[activeStop].area}
+                  initial={{ opacity: 0, scale: 1.08, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 1.02, y: -16 }}
+                  transition={{ duration: 0.6 }}
+                />
+              </AnimatePresence>
+              <div className="route-caption">
+                <p>本日の出店先 / Today&apos;s Spot</p>
+                <h3>{stopsToday[activeStop].area}</h3>
+                <p>{stopsToday[activeStop].time}</p>
+                <a href={stopsToday[activeStop].map} target="_blank" rel="noreferrer">
+                  Open in Maps
+                </a>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -507,16 +519,17 @@ export default function Home() {
             viewport={{ once: true, amount: 0.5 }}
             transition={{ duration: 0.8 }}
           >
-            <p>Event booking / Final CTA</p>
-            <h2>Bring NINJA POTATO to your event</h2>
+            <p>出店先募集中 / For Business Owners in Japan</p>
+            <h2>日本人経営者向け 出店先募集中！</h2>
             <p>
-              Planning a festival, hotel activation, or school event in Japan? We
-              provide fast service, bilingual support, and photo-ready food moments.
+              商業施設、観光地イベント、ホテル前スペース、地域フェスなど、
+              訪日客の多いロケーションでの出店提携先を募集しています。
+              キッチンカー運営・英語接客・SNS拡散導線まで一括で対応可能です。
             </p>
             <div>
-              <a href="mailto:booking@ninjapotato.jp">booking@ninjapotato.jp</a>
+              <a href="mailto:booking@ninjapotato.jp">提携相談: booking@ninjapotato.jp</a>
               <a href="https://wa.me/810000000000" target="_blank" rel="noreferrer">
-                WhatsApp Booking
+                LINE / WhatsAppで相談
               </a>
             </div>
           </motion.div>
