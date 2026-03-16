@@ -209,8 +209,8 @@ const stopsToday: Stop[] = [
     },
     time: "11:30 - 14:00",
     note: {
-      ja: "昼前は観光客が集中する狙い目の時間帯です。",
-      en: "Best timing for late-morning sightseeing traffic.",
+      ja: "日本の観光地で、忍者気分を楽しもう。",
+      en: "Step into ninja mode while exploring Japan's iconic sights.",
     },
     map: "https://maps.google.com/?q=Asakusa+Sensoji",
     image:
@@ -226,7 +226,7 @@ const stopsToday: Stop[] = [
     time: "15:30 - 18:30",
     note: {
       ja: "夕方は撮影需要が高く、短い待機列が発生します。",
-      en: "Peak photo hours with short waiting lines.",
+      en: "Evening is peak photo time, so short lines may form.",
     },
     map: "https://maps.google.com/?q=Shibuya+Scramble+Crossing",
     image:
@@ -241,8 +241,8 @@ const stopsToday: Stop[] = [
     },
     time: "19:30 - 22:00",
     note: {
-      ja: "夜景と一緒に“見つけた体験”を仕上げる夜ミッション。",
-      en: "Night mission stop to finish your find-and-snap experience.",
+      ja: "忍者といえば夜。忍び込むための携帯食は NINJA POTATO で。",
+      en: "Night is ninja time. Fuel your stealth mission with NINJA POTATO.",
     },
     map: "https://maps.google.com/?q=Tokyo+Skytree",
     image:
@@ -328,14 +328,14 @@ const localeCopy: Record<Locale, LocaleCopy> = {
     },
     common: {
       scroll: "SCROLL",
-      tasteFxTop: "味覚",
-      tasteFxBottom: "クエスト",
+      tasteFxTop: "FAV",
+      tasteFxBottom: "FLAVOR",
     },
     about: {
       kicker: "What is NINJA POTATO?",
       title1: "潜入",
       title2: "携帯食",
-      body: "NINJA POTATO は、日本を巡るための“携帯できる潜入食”として設計されたブランドです。手裏剣型のフライをキッチンカーで提供し、観光地で偶然見つける楽しさごと売っています。",
+      body: "NINJA POTATO は、日本を巡るための“携帯できる潜入食”をコンセプトにしています。手裏剣型のフライドポテトを提供し、観光地で偶然見つける楽しさをぜひご堪能ください。",
     },
     menu: {
       kicker: "メニュー",
@@ -403,14 +403,14 @@ const localeCopy: Record<Locale, LocaleCopy> = {
     },
     common: {
       scroll: "SCROLL",
-      tasteFxTop: "Taste",
-      tasteFxBottom: "Quest",
+      tasteFxTop: "FAV",
+      tasteFxBottom: "FLAVOR",
     },
     about: {
       kicker: "What is NINJA POTATO?",
       title1: "STEALTH",
       title2: "SNACK",
-      body: "NINJA POTATO is built as a pocket-sized mission snack for exploring Japan. Our shuriken fries are served from a mobile kitchen in high-traffic sightseeing areas, turning street food into a findable experience.",
+      body: "NINJA POTATO is built around the idea of a portable stealth snack for traveling across Japan. We serve shuriken-shaped fries and invite you to enjoy the thrill of discovering them by chance in busy sightseeing spots.",
     },
     menu: {
       kicker: "Menu",
